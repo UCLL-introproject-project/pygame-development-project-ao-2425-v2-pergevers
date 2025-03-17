@@ -32,6 +32,7 @@ reveal_dealer = False
 hand_active = False
 add_score = False
 results = ['', 'Player busted', 'Player WINS!','Dealer wins','The game was tied']
+player_bust = False
 
 #deal cards
 def deal_cards(hand,deck):
@@ -67,7 +68,7 @@ def draw_scores(player,dealer):
 #check endgame function
 def check_endgame(hand_act,deal_score,play_score,result,totals,add):
     #check endgame scenarios
-    if not hand_act and deal_score>=17:
+    if (not hand_act and deal_score>=17) or player_bust:
         if play_score>21:
             result=1
         elif deal_score<play_score<=21 or deal_score>21:
@@ -182,6 +183,7 @@ while run:
                     dealer_score = 0
                     player_score = 0
                     reveal_dealer = False
+                    player_bust = False
             else:
                 if buttons[0].collidepoint(event.pos) and player_score<21 and hand_active:
                     my_hand, game_deck = deal_cards(my_hand,game_deck)
@@ -200,9 +202,11 @@ while run:
                         dealer_score = 0
                         player_score = 0
                         reveal_dealer = False
+                        player_bust = False
     if hand_active and player_score>21:
         hand_active = False
-        reveal_dealer = True                
+        reveal_dealer = False
+        player_bust = True                
     outcome, records, add_score = check_endgame(hand_active,dealer_score,player_score,outcome,records,add_score)
     pygame.display.flip()
 
