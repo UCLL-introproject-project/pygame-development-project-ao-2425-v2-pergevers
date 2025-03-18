@@ -33,6 +33,8 @@ hand_active = False
 add_score = False
 results = ['', 'Player busted', 'Player WINS!','Dealer wins','The game was tied']
 player_bust = False
+delayBetweenDealerCards = 2
+dealerScoreRect= pygame.Rect(0,0,0,0)
 
 #deal cards
 def deal_cards(hand,deck):
@@ -52,7 +54,7 @@ def draw_cards(player,dealer,reveal):
     for i in range(len(dealer)):
         pygame.draw.rect(screen,'white', [70 + (70*i),80 + (5*i),120,220],0,5)
         if i != 0 or reveal>0:
-            if i<=reveal:
+            if i<=reveal+1:
                 screen.blit(font.render(dealer[i],True,'black'),(77+ 70*i,85+5*i))
                 screen.blit(font.render(dealer[i],True,'black'),(152+ 70*i,255+5*i))
         else:
@@ -64,7 +66,9 @@ def draw_cards(player,dealer,reveal):
 def draw_scores(player,dealer):
     screen.blit(font.render(f'Your score: {player}',True,'white'),(350,345))
     if reveal_dealer>0:
-        screen.blit(font.render(f'Dealer score: {dealer}',True,'white'),(350,50))
+        dealerScoreRect=screen.blit(font.render(f'Dealer score: {dealer}',True,'white'),(350,50))
+        pygame.draw.rect(screen,'black',dealerScoreRect)
+        dealerScoreRect=screen.blit(font.render(f'Dealer score: {dealer}',True,'white'),(350,50))
         
 #check endgame function
 def check_endgame(hand_act,deal_score,play_score,result,totals,add):
@@ -170,9 +174,7 @@ while run:
                 pygame.display.flip()
                 dealer_hand,game_deck = deal_cards(dealer_hand,game_deck)
                 dealer_score = calculate_score(dealer_hand)
-                
-                
-                time.sleep(3)
+                time.sleep(delayBetweenDealerCards)
         draw_scores(player_score,dealer_score)
     buttons = draw_game(active,records,outcome)
     for event in pygame.event.get():
