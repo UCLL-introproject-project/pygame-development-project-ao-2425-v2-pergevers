@@ -98,30 +98,34 @@ def draw_game(act,record,result):
         button_list.append(deal)
     #game started
     else:
-        #hit
-        hit = pygame.draw.rect(screen, 'white', [0,640,350,80],0,5)
-        pygame.draw.rect(screen, 'blue', [0,640 ,350,80],3,5)
-        hit_text = font.render('HIT ME', True, 'black')
-        screen.blit(hit_text, (100,663))
-        button_list.append(hit)
-        #stand
-        stand = pygame.draw.rect(screen, 'white', [350,640 ,350,80],0,5)
-        pygame.draw.rect(screen, 'blue', [350,640 ,350,80],3,5)
-        stand_text = font.render('STAND', True, 'black')
-        screen.blit(stand_text, (450,663))
-        button_list.append(stand)
         #score
         score_text = font.render(f'Wins: {record[0]}    Losses: {record[1]}     Draws: {record[2]}',True, 'white')
         screen.blit(score_text,(15,740))
     #if there is an outcome for the hand that was played then we display restart button
-    if result != 0:
-        screen.blit(font.render(results[result],True,'white'),(15,25))
-        deal = pygame.draw.rect(screen, 'white', [175,220 ,350,100],0,5)
-        pygame.draw.rect(screen, 'blue', [175,220 ,350,100],3,5)
-        pygame.draw.rect(screen, 'black', [178,223 ,344,94],3,5)
-        deal_text = font.render('NEW HAND', True, 'black')
-        screen.blit(deal_text, (220,250))
-        button_list.append(deal)
+        if result != 0:
+            screen.blit(font.render(results[result],True,'white'),(15,25))
+            newHand = pygame.draw.rect(screen, 'white', [175,610 ,350,100],0,5)
+            pygame.draw.rect(screen, 'blue', [175,610 ,350,100],3,5)
+            pygame.draw.rect(screen, 'black', [178,613 ,344,94],3,5)
+            deal_text = font.render('NEW HAND', True, 'black')
+            screen.blit(deal_text, (225,640))
+            button_list.append(pygame.Rect(0,640,350,80))
+            button_list.append(pygame.Rect(350,640 ,350,80))
+            button_list.append(newHand)
+        else:
+            #hit
+            hit = pygame.draw.rect(screen, 'white', [0,640,350,80],0,5)
+            pygame.draw.rect(screen, 'blue', [0,640 ,350,80],3,5)
+            hit_text = font.render('HIT ME', True, 'black')
+            screen.blit(hit_text, (100,663))
+            button_list.append(hit)
+            #stand
+            stand = pygame.draw.rect(screen, 'white', [350,640 ,350,80],0,5)
+            pygame.draw.rect(screen, 'blue', [350,640 ,350,80],3,5)
+            stand_text = font.render('STAND', True, 'black')
+            screen.blit(stand_text, (450,663))
+            button_list.append(stand)
+
     return button_list
 
 #calculate the score of a hand
