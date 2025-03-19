@@ -36,28 +36,62 @@ player_bust = False
 delayBetweenDealerCards = 2
 dealerScoreRect= pygame.Rect(0,0,0,0)
 
+suit_font = pygame.font.SysFont('arial',44)
+
+#symbols
+spades = "\u2660"
+hearts = "\u2665"
+diamonds = "\u2666"
+clubs = "\u2663"
+
+def determine_symbol(number_of_symbol):
+    if number_of_symbol == 0:
+        return hearts
+    if number_of_symbol == 1:
+        return spades
+    if number_of_symbol == 2:
+        return clubs
+    if number_of_symbol == 3:
+        return diamonds
+    
+def determine_color(suit):
+    if suit in [hearts,diamonds]:
+        return 'red'
+    else:
+        return 'black'
 
 #deal cards
 def deal_cards(hand,deck):
-    card = random.randint(0,len(deck))
-    hand.append(deck[card-1])
-    deck.pop(card-1)
-    return hand,deck
+    card = []
+    number = random.randint(0,len(deck)-1)
+    symbol = (number%52)//13
+    card.append(deck[number])
+    card.append(determine_symbol(symbol))
+    deck.pop(number)
+    return card,deck
 
 #draw cards on screen
 def draw_cards(player,dealer,reveal):
     for i in range(len(player)):
+        number_of_card = (player[i])[0]
+        suit_of_card = (player[i])[1]
         pygame.draw.rect(screen,'white', [70 + (70*i),370 + (5*i),120,220],0,5)
-        screen.blit(font.render(player[i],True,'black'),(75+ 70*i,375+5*i))
-        screen.blit(font.render(player[i],True,'black'),(152+ 70*i,545+5*i))
+        screen.blit(font.render(player[i][0],True,'black'),(75+ 70*i,375+5*i))
+        screen.blit(font.render(player[i][0],True,'black'),(152+ 70*i,545+5*i))
+        screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,450+5*i))
+        screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,560+5*i))
         pygame.draw.rect(screen,'red', [70 + (70*i),370 + (5*i),120,220],5,5)
 
     for i in range(len(dealer)):
+        number_of_card = (dealer[i])[0]
+        suit_of_card = (dealer[i])[1]
         pygame.draw.rect(screen,'white', [70 + (70*i),80 + (5*i),120,220],0,5)
         if i != 0 or reveal>0:
             if i<=reveal+1:
-                screen.blit(font.render(dealer[i],True,'black'),(77+ 70*i,85+5*i))
-                screen.blit(font.render(dealer[i],True,'black'),(152+ 70*i,255+5*i))
+                screen.blit(font.render(dealer[i][0],True,'black'),(77+ 70*i,85+5*i))
+                screen.blit(font.render(dealer[i][0],True,'black'),(152+ 70*i,255+5*i))
+            screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,150+5*i))
+            screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,260+5*i))
         else:
             screen.blit(font.render('?',True,'black'),(77+ 70*i,85+5*i))
             screen.blit(font.render('?',True,'black'),(152+ 70*i,255+5*i))
@@ -138,14 +172,17 @@ def draw_game(act,record,result):
 #calculate the score of a hand
 def calculate_score(hand):
     hand_score = 0
-    aces_count = hand.count('A')
-    for i in range(len(hand)):
+    hand_with_numbers = []
+    for card in hand:
+        hand_with_numbers.append(card[0])
+    aces_count = hand_with_numbers.count('A')
+    for i in range(len(hand_with_numbers)):
         for j in range(8):
-            if hand[i] == cards[j]:
-                hand_score += int(hand[i])
-        if hand[i] in ['10','J','Q','K']:
+            if hand_with_numbers[i] == cards[j]:
+                hand_score += int(hand_with_numbers[i])
+        if hand_with_numbers[i] in ['10','J','Q','K']:
             hand_score+=10
-        elif hand[i] == 'A':
+        elif hand_with_numbers[i] == 'A':
             hand_score += 11
     while hand_score > 21 and aces_count >0:
         if hand_score>21:
@@ -161,8 +198,10 @@ while run:
 
     if initial_deal:
         for i in range(2):
-            my_hand,game_deck = deal_cards(my_hand,game_deck)
-            dealer_hand,game_deck = deal_cards(dealer_hand,game_deck)
+            new_card,game_deck = deal_cards(my_hand,game_deck)
+            my_hand.append(new_card)
+            new_card,game_deck = deal_cards(dealer_hand,game_deck)
+            dealer_hand.append(new_card)
         initial_deal = False
         print(my_hand,dealer_hand)
     
@@ -177,7 +216,8 @@ while run:
                 draw_cards(my_hand,dealer_hand,reveal_dealer)
                 draw_scores(player_score,dealer_score)
                 pygame.display.flip()
-                dealer_hand,game_deck = deal_cards(dealer_hand,game_deck)
+                new_card,game_deck = deal_cards(dealer_hand,game_deck)
+                dealer_hand.append(new_card)
                 dealer_score = calculate_score(dealer_hand)
                 time.sleep(delayBetweenDealerCards)
         draw_scores(player_score,dealer_score)
@@ -201,7 +241,8 @@ while run:
                     player_bust = False
             else:
                 if buttons[0].collidepoint(event.pos) and player_score<21 and hand_active:
-                    my_hand, game_deck = deal_cards(my_hand,game_deck)
+                    new_card, game_deck = deal_cards(my_hand,game_deck)
+                    my_hand.append(new_card)
                 elif buttons[1].collidepoint(event.pos) and reveal_dealer==0:
                     reveal_dealer= reveal_dealer+1
                     hand_active = False
