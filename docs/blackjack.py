@@ -34,6 +34,7 @@ add_score = False
 results = ['', 'Player busted', 'Player WINS!','Dealer wins','The game was tied']
 player_bust = False
 
+
 #deal cards
 def deal_cards(hand,deck):
     card = random.randint(0,len(deck))
@@ -80,8 +81,12 @@ def check_endgame(hand_act,deal_score,play_score,result,totals,add):
         if add:
             if result == 1 or result == 3:
                 totals[1] += 1
+                pygame.mixer.music.load("sound_effects/sad-trombone-gaming-sound-effect-hd.mp3")
+                pygame.mixer.music.play()
             elif result == 2:
                 totals[0] += 1
+                pygame.mixer.music.load("sound_effects/roblox-old-winning-sound-effect.mp3")
+                pygame.mixer.music.play()
             else:
                 totals[2] += 1
             add = False
