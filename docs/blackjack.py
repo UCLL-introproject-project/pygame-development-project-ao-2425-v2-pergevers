@@ -78,8 +78,8 @@ def draw_cards(player,dealer,reveal):
         pygame.draw.rect(screen,'white', [70 + (70*i),370 + (5*i),120,220],0,5)
         screen.blit(font.render(player[i][0],True,'black'),(75+ 70*i,375+5*i))
         screen.blit(font.render(player[i][0],True,'black'),(152+ 70*i,545+5*i))
-        screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,450+5*i))
-        screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,560+5*i))
+        screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,400+5*i))
+        screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,510+5*i))
         pygame.draw.rect(screen,'red', [70 + (70*i),370 + (5*i),120,220],5,5)
 
     for i in range(len(dealer)):
@@ -90,8 +90,8 @@ def draw_cards(player,dealer,reveal):
             if i<=reveal+1:
                 screen.blit(font.render(dealer[i][0],True,'black'),(77+ 70*i,85+5*i))
                 screen.blit(font.render(dealer[i][0],True,'black'),(152+ 70*i,255+5*i))
-            screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,150+5*i))
-            screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,260+5*i))
+            screen.blit(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),(80+70*i,110+5*i))
+            screen.blit(pygame.transform.flip(suit_font.render(suit_of_card,True,determine_color(suit_of_card)),False,True),(152+70*i,220+5*i))
         else:
             screen.blit(font.render('?',True,'black'),(77+ 70*i,85+5*i))
             screen.blit(font.render('?',True,'black'),(152+ 70*i,255+5*i))
