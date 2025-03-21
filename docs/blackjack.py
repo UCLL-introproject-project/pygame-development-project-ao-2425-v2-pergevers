@@ -43,7 +43,7 @@ spades = "\u2660"
 hearts = "\u2665"
 diamonds = "\u2666"
 clubs = "\u2663"
-
+#determine the symbol based on the number that came out of the calculations
 def determine_symbol(number_of_symbol):
     if number_of_symbol == 0:
         return hearts
@@ -53,7 +53,7 @@ def determine_symbol(number_of_symbol):
         return clubs
     if number_of_symbol == 3:
         return diamonds
-    
+#determine color of symbol based on what suit it is   
 def determine_color(suit):
     if suit in [hearts,diamonds]:
         return 'red'
@@ -207,7 +207,6 @@ while run:
             new_card,game_deck = deal_cards(dealer_hand,game_deck)
             dealer_hand.append(new_card)
         initial_deal = False
-        print(my_hand,dealer_hand)
     
 
     if active:

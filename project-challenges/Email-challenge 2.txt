@@ -1,0 +1,15 @@
+Email challenge 1:
+
+Beste mevrouw Verdeyen,
+
+Ik volg de opleiding toegepaste informatica in afstandsonderwijs en ben momenteel het vak 'introductieproject' aan het volgen. Ik stuur deze mail als onderdeel van een van de challenges van het Pygame Development Project.
+
+Voor het project wordt er verwacht met iemand samen te werken. In de concrete uitvoer ondervond ik echter een probleem. Ik wou via github die persoon uitnodigen om mee te werken aan het probleem maar vond niet hoe ik dit moest doen. Ik ben online gaan zoeken en heb gevonden dat het kan zijn dat omdat ik de repo via een classroom link heb gekregen dit niet mogelijk is.
+
+Ondertussen heb ik een oplossing hiervoor gevonden. Ik heb namelijk de link van mijn repo gedeeld en vervolgens kon de persoon met wie ik hieraan samenwerk via een fork pull requests sturen. Ik denk echter dat dit niet de beste oplossing was dus zou ik graag uw advies ontvangen over hoe ik het beter had kunnen doen.
+
+Alvast bedankt voor uw tijd en hulp,
+
+Met vriendelijke groet,
+
+Per
