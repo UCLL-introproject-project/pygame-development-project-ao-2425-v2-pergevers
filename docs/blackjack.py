@@ -154,8 +154,8 @@ def draw_game(act,record,result):
             pygame.draw.rect(screen, 'black', [178,613 ,344,94],3,5)
             deal_text = font.render('NEW HAND', True, 'black')
             screen.blit(deal_text, (225,640))
-            button_list.append(pygame.Rect(0,640,350,80))
-            button_list.append(pygame.Rect(350,640 ,350,80))
+            button_list.append(pygame.Rect(0,0,0,0))
+            button_list.append(pygame.Rect(0,0,0,0))
             button_list.append(newHand)
         else:
             #hit
